@@ -1,0 +1,62 @@
+.mainFrame {
+	display: flex;
+	flex-direction: column;
+	margin: 150px 200px;
+	position: absolute;
+	top: 0;
+}
+
+.contentSections {
+	display: flex;
+	justify-content: space-between;
+}
+
+/* Welcome Section */
+.welcomeSection {
+	font-family: Roboto;
+	line-height: 24px;
+	width: 1000px;
+}
+
+.welcomeSection h1 {
+	font-size: 48px;
+}
+
+.firstName {
+	color: #ff0101;
+}
+
+.welcomeSection p {
+	font-size: 24px;
+	padding: 30px 0 60px 0;
+}
+
+/* Activity Section */
+.activitySection {
+	display: flex;
+	width: 835px;
+	height: 320px;
+	top: 30px;
+	background: #fbfbfb;
+	box-shadow: 0px 2px 4px 0px #00000005;
+}
+
+.activitySection h2 {
+	margin: 20px 200px 0 20px;
+	font-size: 22px;
+}
+
+.activityHead {
+	display: flex;
+}
+
+.activityHead p {
+	margin-left: 50px;
+}
+
+.trackSection {
+	width: 258px;
+	background: #fbfbfb;
+	box-shadow: 0px 2px 4px 0px #00000005;
+	right: 0;
+}
