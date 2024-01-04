@@ -1,3 +1,11 @@
+import {
+	Radar,
+	RadarChart,
+	PolarGrid,
+	PolarAngleAxis,
+	PolarRadiusAxis,
+} from "recharts";
+
 const UserPerformance = ({ userPerformance }) => {
 	if (
 		!userPerformance ||
@@ -5,7 +13,7 @@ const UserPerformance = ({ userPerformance }) => {
 		userPerformance.data === undefined
 	) {
 		console.log("userPerformance:", userPerformance);
-		return <p>No user performance data available</p>;
+		return <p>No user performance data available.</p>;
 	}
 	const performanceData = Array.isArray(userPerformance.data)
 		? userPerformance.data
@@ -20,30 +28,33 @@ const UserPerformance = ({ userPerformance }) => {
 
 	return (
 		<div>
+			<RadarChart></RadarChart>
 			<div>
-				<p>Intensité</p>
-				<p>{intensiteValue}</p>
-			</div>
-			<div>
-				<p>Vitesse</p>
-				<p>{vitesseValue}</p>
-			</div>
-			<div>
-				<p>Force</p>
-				<p>{forceValue}</p>
-			</div>
-			<div>
-				<p>Endurance</p>
-				<p>{enduranceValue}</p>
-			</div>
-			<div>
-				<p>Energie</p>
-				<p>{energieValue}</p>
-			</div>
-			<div>
-				<p>Cardio</p>
-				<p>{cardioValue}</p>
-			</div>
+				<div>
+					<p>Intensité</p>
+					<p>{intensiteValue}</p>
+				</div>
+				<div>
+					<p>Vitesse</p>
+					<p>{vitesseValue}</p>
+				</div>
+				<div>
+					<p>Force</p>
+					<p>{forceValue}</p>
+				</div>
+				<div>
+					<p>Endurance</p>
+					<p>{enduranceValue}</p>
+				</div>
+				<div>
+					<p>Energie</p>
+					<p>{energieValue}</p>
+				</div>
+				<div>
+					<p>Cardio</p>
+					<p>{cardioValue}</p>
+				</div>
+			</div>{" "}
 		</div>
 	);
 };

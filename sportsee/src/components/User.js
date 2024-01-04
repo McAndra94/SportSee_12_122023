@@ -1,13 +1,12 @@
 /* import { BrowserRouter as Router, Route, Switch } from "react-router-dom";*/
-// import { useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import UserWelcome from "./UserWelcome";
 import UserActivity from "./UserActivity";
 import UserTrack from "./UserTrack";
 import UserScore from "./UserScore";
 import UserAverageSessions from "./UserAverageSessions";
 import UserPerformance from "./UserPerformance";
-
 import {
 	fetchUserData,
 	fetchUserActivity,
@@ -16,9 +15,9 @@ import {
 } from "../apiServices";
 
 const User = () => {
-	const pathname = window.location.pathname;
-	// Retrieve id from url
-	const id = pathname.split("/").pop();
+	// Retrieve id from URL
+	const { id } = useParams();
+	console.log("Captured ID in User:", id);
 
 	const [userData, setUserData] = useState(null);
 	const [userActivity, setUserActivity] = useState(null);
@@ -45,6 +44,7 @@ const User = () => {
 				setUserActivity(userActivity);
 				setUserAverageSessions(userAverageSessions);
 				setUserPerformance(userPerformance);
+				console.log("User Data:", userData);
 			} catch (error) {
 				console.error("Error fetching user data:", error);
 			}
@@ -53,17 +53,29 @@ const User = () => {
 		fetchData();
 	}, [id]);
 
-	console.log("User Data:", userData);
-
 	return (
 		<div className="mainFrame">
 			<UserWelcome userData={userData} />
 			<div className="contentSections">
-				<UserActivity userActivity={userActivity} />
-				<UserTrack userData={userData} />
-				<UserScore userData={userData} />
-				<UserAverageSessions userAverageSessions={userAverageSessions} />
-				<UserPerformance userPerformance={userPerformance} />
+				<div className="mainComponents">
+					<div className="activityComponent ">
+						<UserActivity id={id} />
+					</div>
+					<div className="rowComponents">
+						<div className="averageSessionsComponent ">
+							<UserAverageSessions id={id} />
+						</div>
+						<div className="performanceComponent ">
+							<UserPerformance userPerformance={userPerformance} />
+						</div>
+						<div className="scoreComponent ">
+							<UserScore userData={userData} />
+						</div>
+					</div>
+				</div>
+				<div className="trackComponent">
+					<UserTrack userData={userData} />
+				</div>
 			</div>
 		</div>
 	);

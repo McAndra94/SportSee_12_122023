@@ -1,6 +1,10 @@
+import { normalizeUserId } from "./dataAdapter";
+
+const API_BASE_URL = "http://localhost:3000";
+
 const fetchUserData = async (id) => {
 	try {
-		const userDataResponse = await fetch(`/user/${id}`);
+		const userDataResponse = await fetch(`${API_BASE_URL}/user/${id}`);
 		if (!userDataResponse.ok) {
 			throw new Error(
 				`Failed to fetch user data. Status: ${userDataResponse.status}`
@@ -15,13 +19,20 @@ const fetchUserData = async (id) => {
 
 const fetchUserActivity = async (id) => {
 	try {
-		const userActivityResponse = await fetch(`/user/${id}/activity`);
+		const url = `${API_BASE_URL}/user/${id}/activity`;
+		console.log("Fetching user activity from:", url);
+
+		const userActivityResponse = await fetch(url);
 		if (!userActivityResponse.ok) {
 			throw new Error(
 				`Failed to fetch user activity. Status: ${userActivityResponse.status}`
 			);
 		}
-		return userActivityResponse.json();
+
+		const userActivityData = await userActivityResponse.json();
+		console.log("User Activity Data:", userActivityData);
+		const normalizedData = normalizeUserId([userActivityData]);
+		return normalizedData[0];
 	} catch (error) {
 		console.error("Error fetching user activity:", error);
 		throw error;
@@ -31,7 +42,7 @@ const fetchUserActivity = async (id) => {
 const fetchUserAverageSessions = async (id) => {
 	try {
 		const userAverageSessionsResponse = await fetch(
-			`/user/${id}/average-sessions`
+			`${API_BASE_URL}/user/${id}/average-sessions`
 		);
 		if (!userAverageSessionsResponse.ok) {
 			throw new Error(
@@ -47,7 +58,9 @@ const fetchUserAverageSessions = async (id) => {
 
 const fetchUserPerformance = async (id) => {
 	try {
-		const userPerformanceResponse = await fetch(`/user/${id}/performance`);
+		const userPerformanceResponse = await fetch(
+			`${API_BASE_URL}/user/${id}/performance`
+		);
 		if (!userPerformanceResponse.ok) {
 			throw new Error(
 				`Failed to fetch user performance. Status: ${userPerformanceResponse.status}`

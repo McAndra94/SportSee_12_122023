@@ -1,12 +1,11 @@
 const UserWelcome = ({ userData }) => {
 	// Check if not null nor undefined
 	const firstName = userData?.data?.userInfos?.firstName;
-	//const lastName = userData?.data?.userInfos?.lastName;
 
 	return (
 		<div>
 			<div className="welcomeSection">
-				<h1>
+				<h1 className="welcomeBox">
 					<span>Bonjour </span>
 					<span className="firstName">{firstName}</span>
 				</h1>

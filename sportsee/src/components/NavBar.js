@@ -1,8 +1,8 @@
-import logo from "../logo.png";
-import meditation from "../icons/meditation.svg";
-import swimming from "../icons/swimming.svg";
-import cycling from "../icons/cycling.svg";
-import fitness from "../icons/fitness.svg";
+import logo from "../images/logo.png";
+import meditation from "../images/meditation.svg";
+import swimming from "../images/swimming.svg";
+import cycling from "../images/cycling.svg";
+import fitness from "../images/fitness.svg";
 
 function NavBar() {
 	return (
