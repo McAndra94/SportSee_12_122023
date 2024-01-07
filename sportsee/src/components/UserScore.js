@@ -14,7 +14,7 @@ const UserScore = ({ userData }) => {
 	return (
 		<div className="pieChartContainer">
 			<div className="scoreTitle">Score</div>
-			<div class="chartContainer">
+			<div className="chartContainer">
 				<PieChart width={200} height={200}>
 					<Pie
 						data={chartData}

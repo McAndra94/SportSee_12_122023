@@ -62,10 +62,10 @@ const User = () => {
 						<UserActivity id={id} />
 					</div>
 					<div className="rowComponents">
-						<div className="averageSessionsComponent ">
+						<div className="averageSessionsComponent  ">
 							<UserAverageSessions id={id} />
 						</div>
-						<div className="performanceComponent ">
+						<div className="performanceComponent">
 							<UserPerformance userPerformance={userPerformance} />
 						</div>
 						<div className="scoreComponent ">

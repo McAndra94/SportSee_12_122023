@@ -103,7 +103,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 	width: 885px;
-	margin-bottom: 20px;
+	margin-bottom: 50px;
 }
 
 .averageSessionsComponent,
@@ -112,7 +112,6 @@
 	position: relative;
 	width: 258px;
 	height: 263px;
-	margin-bottom: 50px;
 	border-radius: 6px;
 	box-shadow: 0px 2px 4px 0px #00000005;
 }
@@ -132,6 +131,28 @@
 	height: 48px;
 	opacity: 50.4%;
 	padding: 5px 0 0 34px;
+}
+
+.chartContainer {
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+	position: relative;
+	overflow: hidden;
+}
+
+.chartContainer:hover {
+	background-color: rgba(52, 2, 2, 0.3);
+}
+
+.tooltipBox {
+	background: #ffffff;
+	width: 39px;
+	height: 25px;
+	border: 1px solid transparent;
+	font-size: 8px;
+	font-weight: 500;
+	text-align: center;
 }
 
 /* ---- 2nd: Performance Section */
@@ -245,7 +266,7 @@
 	color: #74798c;
 }
 
-/* --- 1a at the end, means 10% opacity */
+/* --- 1a at the end means 10% opacity */
 .calorieIcon {
 	background: #ff00001a;
 }
