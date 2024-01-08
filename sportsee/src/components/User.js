@@ -17,7 +17,6 @@ import {
 const User = () => {
 	// Retrieve id from URL
 	const { id } = useParams();
-	console.log("Captured ID in User:", id);
 
 	const [userData, setUserData] = useState(null);
 	const [userActivity, setUserActivity] = useState(null);
@@ -62,10 +61,10 @@ const User = () => {
 						<UserActivity id={id} />
 					</div>
 					<div className="rowComponents">
-						<div className="averageSessionsComponent  ">
+						<div className="averageSessionsComponent ">
 							<UserAverageSessions id={id} />
 						</div>
-						<div className="performanceComponent">
+						<div className="performanceComponent ">
 							<UserPerformance userPerformance={userPerformance} />
 						</div>
 						<div className="scoreComponent ">

@@ -14,21 +14,32 @@ const UserAverageSessions = ({ id }) => {
 	const [isHovered, setIsHovered] = useState(false);
 
 	useEffect(() => {
+		// const mockData = [{ day: "L", sessionLength: 30 }];
 		const getUserAverageSessions = async () => {
 			if (typeof id !== "undefined") {
 				try {
 					const averageSessionsData = await fetchUserAverageSessions(id);
 					console.log("Fetched averageSessionsData: ", averageSessionsData);
 
-					setAverageSessions(averageSessionsData.data);
+					setAverageSessions(averageSessionsData);
+					if (averageSessionsData && averageSessionsData.length > 0) {
+						let dayMapping = ["L", "M", "M", "J", "V", "S", "D"];
+						let dayData = averageSessionsData[0].data.sessions.map(
+							(session) => ({
+								...session,
+								day: dayMapping[session.day - 1], // Convert numbers to letters
+							})
+						);
 
-					const dayMapping = ["L", "M", "M", "J", "V", "S", "D"];
-					const dayData = averageSessionsData.data.sessions.map((session) => ({
-						...session,
-						day: dayMapping[session.day - 1], // Convert numbers to letters
-					}));
-					setAverageSessions(dayData);
-					console.log("Fetched dayData: ", dayData);
+						// Add empty days at the start & end for continued line
+						const startEmptyDay = { day: "", sessionLength: "0" };
+						const endEmptyDay = { day: "", sessionLength: "65" };
+
+						dayData = [startEmptyDay, ...dayData, endEmptyDay];
+
+						setAverageSessions(dayData);
+						console.log("Fetched dayData: ", dayData);
+					}
 				} catch (error) {
 					console.error("Error in getUserAverageSessions:", error);
 				}
@@ -39,14 +50,15 @@ const UserAverageSessions = ({ id }) => {
 		console.log("averageSessions data set:", averageSessions);
 	}, [id]); // Re-run if id changes
 
-	console.log("Render with averageSessions:", averageSessions);
+	useEffect(() => {}, [averageSessions]);
+
 	if (!averageSessions) {
 		return <div>Loading...</div>;
 	}
 
 	const handleMouseMove = (event) => {
 		if (event.isTooltipActive) {
-			let chartBox = document.querySelector(".chartContainer");
+			let chartBox = document.querySelector(".avgChartContainer");
 			let boxWidth = chartBox.clientWidth;
 			let mouseLocation = Math.round(
 				(event.activeCoordinate.x / boxWidth) * 100
@@ -58,13 +70,22 @@ const UserAverageSessions = ({ id }) => {
 	};
 
 	const handleMouseLeave = () => {
-		let chartBox = document.querySelector(".chartContainer");
+		let chartBox = document.querySelector(".avgChartContainer");
 		chartBox.style.background = "none";
 		setIsHovered(false);
 	};
 
-	const handleTooltip = ({ active, payload }) => {
+	const handleTooltip = ({ active, payload, label }) => {
 		if (active && payload && payload.length) {
+			const currentIndex = averageSessions.findIndex(
+				(session) => session.day === label
+			);
+
+			// Don't render tooltip for 1st & last (empty days)
+			if (currentIndex === 0 || currentIndex === averageSessions.length - 1) {
+				return null;
+			}
+
 			return (
 				<div className="tooltipBox">
 					<p>{`${payload[0].value} min`}</p>
@@ -76,14 +97,12 @@ const UserAverageSessions = ({ id }) => {
 	};
 
 	return (
-		<div className="chartContainer">
+		<div className="avgChartContainer">
 			<ResponsiveContainer>
 				<h3 className="avgTitle">Durée moyenne des sessions</h3>
 				<LineChart
-					width={258}
-					height={265}
 					data={averageSessions}
-					margin={{ top: 0, right: 10, bottom: 120, left: 10 }}
+					margin={{ bottom: 120 }}
 					onMouseMove={handleMouseMove}
 					onMouseLeave={handleMouseLeave}>
 					<defs>
@@ -98,7 +117,6 @@ const UserAverageSessions = ({ id }) => {
 						axisLine={false}
 						tickLine={false}
 						tick={{ fontSize: 12, fontWeight: 500, fill: "#FFFFFF80", dy: 15 }}
-						padding={{ right: 10, left: 10 }}
 					/>
 					<YAxis dataKey="sessionLength" domain={[0, 65]} hide={true} />
 					<Tooltip content={handleTooltip} cursor={false} />

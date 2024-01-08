@@ -1,9 +1,9 @@
 import {
-	Radar,
+	//Radar,
 	RadarChart,
-	PolarGrid,
+	/* PolarGrid,
 	PolarAngleAxis,
-	PolarRadiusAxis,
+	PolarRadiusAxis, */
 } from "recharts";
 
 const UserPerformance = ({ userPerformance }) => {
