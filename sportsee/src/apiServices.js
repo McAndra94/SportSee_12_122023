@@ -1,4 +1,8 @@
-import { normalizeUserId } from "./dataAdapter";
+import {
+	userIdAdapter,
+	avgSessionsAdapter,
+	performanceAdapter,
+} from "./dataAdapter";
 
 const API_BASE_URL = "http://localhost:3000";
 
@@ -30,9 +34,9 @@ const fetchUserActivity = async (id) => {
 		}
 
 		const userActivityData = await userActivityResponse.json();
-		console.log("User Activity Data:", userActivityData);
-		const normalizedData = normalizeUserId([userActivityData]);
-		return normalizedData[0];
+		// Apply adapter to fetched activity data
+		const userIdData = userIdAdapter([userActivityData]);
+		return userIdData[0];
 	} catch (error) {
 		console.error("Error fetching user activity:", error);
 		throw error;
@@ -49,7 +53,11 @@ const fetchUserAverageSessions = async (id) => {
 				`Failed to fetch user average sessions. Status: ${userAverageSessionsResponse.status}`
 			);
 		}
-		return userAverageSessionsResponse.json();
+
+		// Fetch data, then apply the adapter to the fetched data
+		const userAverageSessionsData = await userAverageSessionsResponse.json();
+		const avgSessionsData = avgSessionsAdapter([userAverageSessionsData]);
+		return avgSessionsData;
 	} catch (error) {
 		console.error("Error fetching user average sessions:", error);
 		throw error;
@@ -66,7 +74,10 @@ const fetchUserPerformance = async (id) => {
 				`Failed to fetch user performance. Status: ${userPerformanceResponse.status}`
 			);
 		}
-		return userPerformanceResponse.json();
+
+		const userPerformanceData = await userPerformanceResponse.json();
+		const performanceData = performanceAdapter([userPerformanceData]);
+		return performanceData[0];
 	} catch (error) {
 		console.error("Error fetching user performance:", error);
 		throw error;
