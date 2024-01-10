@@ -40,6 +40,19 @@ const UserActivity = ({ id }) => {
 		return parseInt(day, 10); // Remove zero till 10
 	};
 
+	const handleTooltip = ({ active, payload }) => {
+		if (active && payload && payload.length) {
+			return (
+				<div className="activTooltipBox">
+					<p>{`${payload[0].value}kg`}</p>
+					<p>{`${payload[1].value}Kcal`}</p>
+				</div>
+			);
+		}
+
+		return null;
+	};
+
 	return (
 		<div className="activitySection">
 			<h2>Activité quotidienne</h2>
@@ -65,7 +78,7 @@ const UserActivity = ({ id }) => {
 					<YAxis
 						yAxisId="right"
 						orientation="right"
-						domain={[65, 85]} // Start at 65 and end at 85
+						domain={[65, 85]} // Start at 65, end at 85
 						ticks={[65, 75, 85]} // Show only these numbers
 						axisLine={false}
 						tickLine={false}
@@ -83,7 +96,8 @@ const UserActivity = ({ id }) => {
 						strokeDasharray="3 3"
 					/>
 
-					<Tooltip />
+					<Tooltip content={handleTooltip} cursor={false} />
+
 					<Bar
 						yAxisId="right"
 						dataKey="kilogram"

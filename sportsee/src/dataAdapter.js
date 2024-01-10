@@ -24,14 +24,19 @@ function avgSessionsAdapter(userData) {
 function performanceAdapter(userData) {
 	console.log("Fetched performance userData: ", userData);
 
-	return userData.map((user) => ({
-		...user,
-		data: user.data.data.map((performance, index, data) => ({
-			...performance,
-			value: data.value,
-			kind: data.kind,
-		})),
-	}));
+	return userData.map((userPerformance) => {
+		const performances = userPerformance.data.data.map((performance) => {
+			return {
+				kind: userPerformance.data.kind[performance.kind],
+				value: performance.value,
+			};
+		});
+
+		return {
+			userId: userPerformance.data.userId,
+			performances,
+		};
+	});
 }
 
 module.exports = {

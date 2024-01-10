@@ -1,4 +1,3 @@
-/* import { BrowserRouter as Router, Route, Switch } from "react-router-dom";*/
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import UserWelcome from "./UserWelcome";
@@ -65,7 +64,7 @@ const User = () => {
 							<UserAverageSessions id={id} />
 						</div>
 						<div className="performanceComponent ">
-							<UserPerformance userPerformance={userPerformance} />
+							<UserPerformance id={id} />
 						</div>
 						<div className="scoreComponent ">
 							<UserScore userData={userData} />

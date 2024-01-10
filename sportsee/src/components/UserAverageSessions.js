@@ -87,7 +87,7 @@ const UserAverageSessions = ({ id }) => {
 			}
 
 			return (
-				<div className="tooltipBox">
+				<div className="avgTooltipBox">
 					<p>{`${payload[0].value} min`}</p>
 				</div>
 			);

@@ -1,60 +1,92 @@
+import React, { useState, useEffect } from "react";
 import {
-	//Radar,
+	Radar,
 	RadarChart,
-	/* PolarGrid,
+	PolarGrid,
 	PolarAngleAxis,
-	PolarRadiusAxis, */
+	PolarRadiusAxis,
 } from "recharts";
+import { fetchUserPerformance } from "../apiServices";
 
-const UserPerformance = ({ userPerformance }) => {
+const UserPerformance = ({ id }) => {
+	const [performance, setPerformance] = useState(null);
+
+	useEffect(() => {
+		const getUserPerformance = async () => {
+			console.log("Before calling fetchUserPerformance for ID:", id);
+			if (typeof id !== "undefined") {
+				try {
+					const performanceData = await fetchUserPerformance(id);
+					setPerformance(performanceData);
+				} catch (error) {
+					console.error("Error in getUserPerformance:", error);
+				}
+			}
+		};
+
+		getUserPerformance();
+	}, [id]); // Re-run if id changes
+
+	console.log("Render with performance data:", performance);
 	if (
-		!userPerformance ||
-		userPerformance.data === null ||
-		userPerformance.data === undefined
+		!performance ||
+		!performance.performances ||
+		performance.performances.length === 0
 	) {
-		console.log("userPerformance:", userPerformance);
 		return <p>No user performance data available.</p>;
 	}
-	const performanceData = Array.isArray(userPerformance.data)
-		? userPerformance.data
-		: [];
 
-	const intensiteValue = performanceData.find((item) => item.kind === 6)?.value;
-	const vitesseValue = performanceData.find((item) => item.kind === 5)?.value;
-	const forceValue = performanceData.find((item) => item.kind === 4)?.value;
-	const enduranceValue = performanceData.find((item) => item.kind === 3)?.value;
-	const energieValue = performanceData.find((item) => item.kind === 2)?.value;
-	const cardioValue = performanceData.find((item) => item.kind === 1)?.value;
+	const kindMapping = {
+		cardio: "Cardio",
+		energy: "Energie",
+		endurance: "Endurance",
+		strength: "Force",
+		speed: "Vitesse",
+		intensity: "Intensité",
+	};
+
+	const radarData = performance.performances
+		.map((item) => ({
+			...item,
+			kind: kindMapping[item.kind],
+			value: item.value,
+		}))
+		.sort((a, b) => {
+			const order = [
+				"Intensité",
+				"Vitesse",
+				"Force",
+				"Endurance",
+				"Energie",
+				"Cardio",
+			];
+			return order.indexOf(a.kind) - order.indexOf(b.kind);
+		});
 
 	return (
 		<div>
-			<RadarChart>
-				<div>
-					<div>
-						<p>Intensité</p>
-						<p>{intensiteValue}</p>
-					</div>
-					<div>
-						<p>Vitesse</p>
-						<p>{vitesseValue}</p>
-					</div>
-					<div>
-						<p>Force</p>
-						<p>{forceValue}</p>
-					</div>
-					<div>
-						<p>Endurance</p>
-						<p>{enduranceValue}</p>
-					</div>
-					<div>
-						<p>Energie</p>
-						<p>{energieValue}</p>
-					</div>
-					<div>
-						<p>Cardio</p>
-						<p>{cardioValue}</p>
-					</div>
-				</div>
+			<RadarChart
+				innerRadius={10}
+				outerRadius={80}
+				width={258}
+				height={263}
+				data={radarData}>
+				<PolarGrid />
+				<PolarAngleAxis
+					dataKey="kind"
+					tick={{ fontSize: 12, fontWeight: 500, fill: "#FFFFFF", dy: 4 }}
+				/>
+				<PolarRadiusAxis
+					domain={[0, 240]}
+					tick={false}
+					axisLine={{ stroke: "transparent" }}
+				/>
+				<Radar
+					name="Performance"
+					dataKey="value"
+					fill="#FF0101"
+					fillOpacity={0.7}
+				/>
 			</RadarChart>
 		</div>
 	);

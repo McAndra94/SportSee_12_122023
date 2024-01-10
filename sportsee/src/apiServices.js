@@ -77,6 +77,7 @@ const fetchUserPerformance = async (id) => {
 
 		const userPerformanceData = await userPerformanceResponse.json();
 		const performanceData = performanceAdapter([userPerformanceData]);
+		console.log("Perform data: ", performanceData);
 		return performanceData[0];
 	} catch (error) {
 		console.error("Error fetching user performance:", error);
