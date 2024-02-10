@@ -14,7 +14,6 @@ const UserAverageSessions = ({ id }) => {
 	const [isHovered, setIsHovered] = useState(false);
 
 	useEffect(() => {
-		// const mockData = [{ day: "L", sessionLength: 30 }];
 		const getUserAverageSessions = async () => {
 			if (typeof id !== "undefined") {
 				try {

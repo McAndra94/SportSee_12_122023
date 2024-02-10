@@ -4,12 +4,6 @@ import glucideIcon from "../images/glucides.svg";
 import lipidIcon from "../images/lipides.svg";
 
 const UserTrack = ({ userData }) => {
-	// Check if not null nor undefined
-	/* let realCalorieCount = userData?.data?.keyData?.calorieCount;
-	console.log("realCalorieCount:", realCalorieCount);
-	// toLocaleString("en-US") : for , thousand separator
-	const calorieCount = realCalorieCount.toLocaleString("en-US");
- */
 	const calorieCount = userData?.data?.keyData?.calorieCount;
 	const proteinCount = userData?.data?.keyData?.proteinCount;
 	const carbohydrateCount = userData?.data?.keyData?.carbohydrateCount;

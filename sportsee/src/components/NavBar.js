@@ -10,19 +10,19 @@ function NavBar() {
 			{/* Top Navbar */}
 			<header>
 				<div className="navBar">
-					<a href="#" className="logo">
+					<a href="/" className="logo">
 						<img src={logo} alt="Logo de SportSee" />
 					</a>
-					<a href="#" className="menu">
+					<a href="/" className="menu">
 						Accueil
 					</a>
-					<a href="#" className="menu">
+					<a href="/" className="menu">
 						Profil
 					</a>
-					<a href="#" className="menu">
+					<a href="/" className="menu">
 						Réglage
 					</a>
-					<a href="#" className="menu">
+					<a href="/" className="menu">
 						Communauté
 					</a>
 				</div>
@@ -31,16 +31,16 @@ function NavBar() {
 			{/* Left NavBar */}
 			<div className="leftNavBar">
 				<div className="leftNav">
-					<a href="#" className="leftNavIcons">
+					<a href="/" className="leftNavIcons">
 						<img src={meditation} alt="Meditation icon" />
 					</a>
-					<a href="#" className="leftNavIcons">
+					<a href="/" className="leftNavIcons">
 						<img src={swimming} alt="Swimming icon" />
 					</a>
-					<a href="#" className="leftNavIcons">
+					<a href="/" className="leftNavIcons">
 						<img src={cycling} alt="Cycling icon" />
 					</a>
-					<a href="#" className="leftNavIcons">
+					<a href="/" className="leftNavIcons">
 						<img src={fitness} alt="Fitness icon" />
 					</a>
 					<p className="copyright">Copyright, SportSee 2020</p>
